@@ -46,7 +46,7 @@ export function Hero() {
         style={{ scale: contentScale, y: contentY }}
         className="max-w-7xl mx-auto px-6 relative z-10 w-full will-change-transform"
       >
-        <div className="grid lg:grid-cols-12 gap-14 lg:gap-16 items-end">
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-end">
           <div ref={statsRef} className="lg:col-span-7">
             <Reveal delay={0.05} y={28}>
               <span className="inline-flex items-center gap-2 rounded-full bg-eco-green/10 border border-eco-green/20 px-4 py-1.5 text-[11px] font-semibold text-eco-green-dark mb-6 tracking-wide uppercase">

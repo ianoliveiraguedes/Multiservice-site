@@ -234,7 +234,17 @@ export function Projects() {
             className="relative rounded-2xl overflow-hidden cursor-pointer group shadow-soft-lg border border-slate-200/80"
             onClick={() => setGalleryOpen(true)}
           >
-            <div className="grid grid-cols-3 gap-0.5 bg-slate-200" style={{ aspectRatio: "16/7" }}>
+            {/* Mobile: single image */}
+            <div className="md:hidden relative aspect-[4/3] overflow-hidden">
+              <img
+                src={preview[0]}
+                alt="Projeto solar"
+                className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            </div>
+
+            {/* Desktop: collage */}
+            <div className="hidden md:grid grid-cols-3 gap-0.5 bg-slate-200" style={{ aspectRatio: "16/7" }}>
               <div className="col-span-2 relative overflow-hidden">
                 <img
                   src={preview[0]}
@@ -351,7 +361,7 @@ export function Projects() {
               transition={{ duration: 0.2 }}
               src={GALLERY_IMAGES[lightboxIdx]}
               alt={`Projeto ${lightboxIdx + 1}`}
-              className="max-h-[90vh] max-w-[80vw] object-contain rounded-lg shadow-2xl"
+              className="max-h-[85vh] max-w-[95vw] md:max-w-[80vw] object-contain rounded-lg shadow-2xl"
             />
             <button
               onClick={() => setLightboxIdx((i) => Math.min((i ?? 0) + 1, GALLERY_IMAGES.length - 1))}
@@ -414,7 +424,7 @@ export function Simulator() {
                     className="premium-input w-full text-2xl font-mono"
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
                   <div>
                     <label className="block text-[11px] uppercase tracking-[0.14em] text-slate-500 font-semibold mb-3">
                       Cidade
