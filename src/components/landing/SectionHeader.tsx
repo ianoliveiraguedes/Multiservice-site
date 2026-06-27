@@ -19,7 +19,7 @@ export function SectionHeader({
   light = false,
 }: SectionHeaderProps) {
   return (
-    <Reveal className={cn("mb-20 md:mb-24", align === "center" && "text-center mx-auto", className)}>
+    <Reveal className={cn("mb-10 md:mb-14", align === "center" && "text-center mx-auto", className)}>
       <span
         className={cn(
           "text-[11px] font-semibold uppercase tracking-[0.2em]",

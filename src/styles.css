@@ -305,3 +305,17 @@
 .animate-pulse-soft {
   animation: pulse-soft 2.5s ease-in-out infinite;
 }
+
+/* Logo glow */
+.logo-glow {
+  filter:
+    drop-shadow(0 0 6px rgba(34, 197, 94, 0.55))
+    drop-shadow(0 0 18px rgba(34, 197, 94, 0.3));
+  transition: filter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.logo-glow:hover {
+  filter:
+    drop-shadow(0 0 10px rgba(34, 197, 94, 0.85))
+    drop-shadow(0 0 28px rgba(34, 197, 94, 0.45));
+}

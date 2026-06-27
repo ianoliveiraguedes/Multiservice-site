@@ -1,20 +1,18 @@
-import { Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { COMPANY_NAME } from "@/lib/landing/constants";
 
 export function Logo({ className = "", light = false }: { className?: string; light?: boolean }) {
   return (
     <div className={cn("flex items-center gap-2.5", className)}>
-      <div
+      <img
+        src="/logo.png"
+        alt="Multiservice Eletrônica"
         className={cn(
-          "relative flex size-9 items-center justify-center rounded-xl shadow-[0_4px_14px_-2px_rgba(34,197,94,0.45)]",
-          light
-            ? "bg-white/10 ring-1 ring-white/20"
-            : "bg-gradient-to-br from-eco-green to-eco-green-dark",
+          "h-11 w-auto object-contain select-none logo-glow",
+          light && "brightness-0 invert",
         )}
-      >
-        <Sun className="size-5 text-white" strokeWidth={2} aria-hidden />
-      </div>
+        draggable={false}
+      />
       <span
         className={cn(
           "font-bold text-[0.92rem] sm:text-base lg:text-[1.03rem] tracking-[-0.015em] whitespace-nowrap leading-none",

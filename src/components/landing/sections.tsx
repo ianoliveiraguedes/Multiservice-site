@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Wallet,
@@ -14,12 +14,7 @@ import {
   Quote,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import projectHouse from "@/assets/project-house.jpg";
-import projectIndustry from "@/assets/project-industry.jpg";
-import projectFarm from "@/assets/project-farm.jpg";
-import { DepthSection } from "@/components/motion/Parallax";
 import { Reveal, StaggerReveal, StaggerItem, premiumEase } from "@/components/motion/Reveal";
-import { ParallaxImage } from "@/components/motion/Parallax";
 import { SectionHeader } from "@/components/landing/SectionHeader";
 import { PremiumButton, PremiumSubmitButton } from "@/components/landing/PremiumButton";
 import {
@@ -53,7 +48,7 @@ export function Benefits() {
   ];
 
   return (
-    <section id="beneficios" className="section-premium relative py-28 md:py-36 bg-surface-muted">
+    <section id="beneficios" className="section-premium relative py-16 md:py-20 bg-surface-muted">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <SectionHeader index="01 — Vantagens" title="Vantagens Estruturais" />
         <StaggerReveal className="grid md:grid-cols-3 lg:grid-cols-5 gap-4">
@@ -88,9 +83,9 @@ export function Process() {
   ];
 
   return (
-    <section id="processo" className="section-premium py-28 md:py-36 bg-white border-t border-slate-200/80">
+    <section id="processo" className="section-premium py-16 md:py-20 bg-white border-t border-slate-200/80">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-20 md:mb-24 flex flex-wrap items-end justify-between gap-8">
+        <div className="mb-10 md:mb-14 flex flex-wrap items-end justify-between gap-8">
           <SectionHeader index="02 — Processo" title="Como funciona" className="!mb-0" />
           <Reveal delay={0.1} className="max-w-sm">
             <p className="text-base text-slate-600 leading-relaxed">
@@ -130,53 +125,245 @@ export function Process() {
 }
 
 /* ---------- Projects ---------- */
+
+const GALLERY_IMAGES = [
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.18 (1).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.18.jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.19.jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.20.jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.21 (1).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.21.jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.22 (1).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.22.jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.23 (1).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.23.jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.24 (1).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.24 (2).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.24.jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.25 (1).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.25 (2).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.25 (3).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.25 (4).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.25.jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.26 (1).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.26 (2).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.26 (3).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.26.jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.27 (1).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.27 (2).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.27 (3).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.27 (4).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.27.jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.28 (1).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.28 (2).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.28 (3).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.28.jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.29 (1).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.29 (2).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.29 (3).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.29 (4).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.29.jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.30 (1).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.30 (2).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.30 (3).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.30.jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.31 (1).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.31 (2).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.31 (3).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.31 (4).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.31.jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.32 (1).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.32 (2).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.32 (3).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.32.jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.33 (1).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.33 (2).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.33 (3).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.33 (4).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.33.jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.34 (1).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.34 (2).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.34 (3).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.34 (4).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.34.jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.35 (1).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.35 (2).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.35 (3).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.35.jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.36 (1).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.36 (2).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.36 (3).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.36 (4).jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.36.jpeg",
+  "/projetos/WhatsApp Image 2026-06-27 at 10.19.37.jpeg",
+];
+
 export function Projects() {
-  const items = [
-    { img: projectHouse, t: "Residência Aurora", tag: "Residencial • 12 kWp" },
-    { img: projectIndustry, t: "Indústria Helios", tag: "Comercial • 150 kWp" },
-    { img: projectFarm, t: "Fazenda Vale Solar", tag: "Rural • 80 kWp" },
-  ];
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        if (lightboxIdx !== null) setLightboxIdx(null);
+        else setGalleryOpen(false);
+      }
+      if (lightboxIdx !== null) {
+        if (e.key === "ArrowRight") setLightboxIdx((i) => Math.min((i ?? 0) + 1, GALLERY_IMAGES.length - 1));
+        if (e.key === "ArrowLeft") setLightboxIdx((i) => Math.max((i ?? 0) - 1, 0));
+      }
+    };
+    if (galleryOpen || lightboxIdx !== null) window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [galleryOpen, lightboxIdx]);
+
+  useEffect(() => {
+    document.body.style.overflow = galleryOpen || lightboxIdx !== null ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [galleryOpen, lightboxIdx]);
+
+  const preview = GALLERY_IMAGES.slice(0, 5);
 
   return (
-    <section id="projetos" className="section-premium relative py-28 md:py-36 bg-surface-muted border-t border-slate-200/80">
+    <section id="projetos" className="section-premium relative py-16 md:py-20 bg-surface-muted border-t border-slate-200/80">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <SectionHeader index="03 — Portfólio" title="Projetos realizados" />
-        <StaggerReveal className="grid md:grid-cols-3 gap-8">
-          {items.map((p) => (
-            <StaggerItem key={p.t}>
-              <DepthSection>
-                <motion.article
-                  whileHover={{ y: -6 }}
-                  transition={{ duration: 0.45, ease: premiumEase }}
-                  className="group depth-card overflow-hidden rounded-2xl bg-white border border-slate-200/80 shadow-soft hover:border-eco-green/30 transition-[border-color,box-shadow] duration-500"
-                >
-                  <div className="aspect-[4/5] overflow-hidden">
-                    <ParallaxImage
-                      src={p.img}
-                      alt={p.t}
-                      containerClassName="size-full"
-                      className="transition-transform duration-[1400ms] group-hover:scale-105"
+
+        <Reveal scale>
+          <div
+            className="relative rounded-2xl overflow-hidden cursor-pointer group shadow-soft-lg border border-slate-200/80"
+            onClick={() => setGalleryOpen(true)}
+          >
+            <div className="grid grid-cols-3 gap-0.5 bg-slate-200" style={{ aspectRatio: "16/7" }}>
+              <div className="col-span-2 relative overflow-hidden">
+                <img
+                  src={preview[0]}
+                  alt="Projeto solar"
+                  className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+              <div className="grid grid-rows-2 gap-0.5">
+                {preview.slice(1).map((src, i) => (
+                  <div key={i} className="relative overflow-hidden">
+                    <img
+                      src={src}
+                      alt="Projeto solar"
+                      className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   </div>
-                  <div className="p-7 flex items-start justify-between">
-                    <div>
-                      <h3 className="font-semibold text-lg tracking-tight text-tech-blue">{p.t}</h3>
-                      <p className="text-xs uppercase tracking-[0.12em] text-slate-500 mt-2 font-medium">{p.tag}</p>
-                    </div>
-                    <motion.span
-                      className="flex size-10 items-center justify-center rounded-full bg-eco-green/10 text-eco-green-dark"
-                      whileHover={{ x: 2, y: -2, backgroundColor: "rgba(37, 99, 235, 0.12)", color: "#2563eb" }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      ↗
-                    </motion.span>
-                  </div>
-                </motion.article>
-              </DepthSection>
-            </StaggerItem>
-          ))}
-        </StaggerReveal>
+                ))}
+              </div>
+            </div>
+            <div className="absolute inset-0 bg-tech-blue/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <span className="text-white text-xl font-semibold tracking-tight">Ver galeria completa</span>
+            </div>
+            <div className="absolute bottom-4 right-4 flex items-center gap-2 bg-white/90 backdrop-blur-md rounded-full px-4 py-2 shadow-soft text-sm font-medium text-tech-blue">
+              <span className="size-2 bg-eco-green rounded-full animate-pulse-soft" />
+              {GALLERY_IMAGES.length} fotos de projetos reais
+            </div>
+          </div>
+        </Reveal>
       </div>
+
+      {/* Gallery Modal */}
+      <AnimatePresence>
+        {galleryOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-50 bg-tech-blue flex flex-col"
+          >
+            <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 shrink-0">
+              <div>
+                <p className="text-[11px] text-slate-400 uppercase tracking-[0.18em] font-semibold">03 — Portfólio</p>
+                <h3 className="text-white font-semibold text-lg tracking-tight mt-0.5">Projetos realizados</h3>
+              </div>
+              <div className="flex items-center gap-4">
+                <span className="text-slate-400 text-sm">{GALLERY_IMAGES.length} fotos</span>
+                <button
+                  onClick={() => setGalleryOpen(false)}
+                  className="size-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+                  aria-label="Fechar galeria"
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+            <div className="overflow-y-auto flex-1 p-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
+                {GALLERY_IMAGES.map((src, i) => (
+                  <motion.button
+                    key={i}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.25, delay: Math.min(i * 0.015, 0.4) }}
+                    onClick={() => setLightboxIdx(i)}
+                    className="relative overflow-hidden rounded-lg aspect-square group/thumb focus:outline-none focus:ring-2 focus:ring-eco-green"
+                  >
+                    <img
+                      src={src}
+                      alt={`Projeto ${i + 1}`}
+                      className="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover/thumb:scale-110"
+                      loading="lazy"
+                    />
+                  </motion.button>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Lightbox */}
+      <AnimatePresence>
+        {lightboxIdx !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[60] bg-black/98 flex items-center justify-center"
+          >
+            <button
+              onClick={() => setLightboxIdx(null)}
+              className="absolute top-4 right-4 size-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10"
+              aria-label="Fechar"
+            >
+              ✕
+            </button>
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 text-white/50 text-sm tabular-nums">
+              {lightboxIdx + 1} / {GALLERY_IMAGES.length}
+            </div>
+            <button
+              onClick={() => setLightboxIdx((i) => Math.max((i ?? 1) - 1, 0))}
+              disabled={lightboxIdx === 0}
+              className="absolute left-3 md:left-6 size-11 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white text-xl disabled:opacity-20 transition-all"
+              aria-label="Anterior"
+            >
+              ←
+            </button>
+            <motion.img
+              key={lightboxIdx}
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.2 }}
+              src={GALLERY_IMAGES[lightboxIdx]}
+              alt={`Projeto ${lightboxIdx + 1}`}
+              className="max-h-[90vh] max-w-[80vw] object-contain rounded-lg shadow-2xl"
+            />
+            <button
+              onClick={() => setLightboxIdx((i) => Math.min((i ?? 0) + 1, GALLERY_IMAGES.length - 1))}
+              disabled={lightboxIdx === GALLERY_IMAGES.length - 1}
+              className="absolute right-3 md:right-6 size-11 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white text-xl disabled:opacity-20 transition-all"
+              aria-label="Próxima"
+            >
+              →
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
@@ -205,7 +392,7 @@ export function Simulator() {
   }
 
   return (
-    <section id="simulador" className="section-premium py-28 md:py-36 bg-white border-t border-slate-200/80">
+    <section id="simulador" className="section-premium py-16 md:py-20 bg-white border-t border-slate-200/80">
       <div className="max-w-7xl mx-auto px-6">
         <SectionHeader index="04 — Calculadora" title="Simule sua economia" />
         <Reveal scale>
@@ -304,13 +491,13 @@ export function Simulator() {
 /* ---------- Testimonials ---------- */
 export function Testimonials() {
   const items = [
-    { q: "Reduzimos 92% da conta no primeiro mês. A equipe é impecável.", a: "Marina Albuquerque", r: "Residencial • Campinas/SP" },
+    { q: "Reduzimos 92% da conta no primeiro mês. A equipe é impecável.", a: "Iago Guedes", r: "Eldorado Park • Goiânia/GO" },
     { q: "Projeto entregue no prazo e com acabamento premium. Recomendo.", a: "Carlos Mendes", r: "Indústria • Goiânia/GO" },
-    { q: "Sério, profissional e transparente do orçamento à homologação.", a: "Júlia Tavares", r: "Fazenda • Uberaba/MG" },
+    { q: "Sério, profissional e transparente do orçamento à homologação.", a: "Ian Oliveira", r: "Residencial • Anápolis/GO" },
   ];
 
   return (
-    <section className="section-premium relative py-28 md:py-36 bg-surface-muted border-t border-slate-200/80">
+    <section className="section-premium relative py-16 md:py-20 bg-surface-muted border-t border-slate-200/80">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <SectionHeader index="05 — Clientes" title="Quem confiou no projeto" />
         <StaggerReveal className="grid md:grid-cols-3 gap-6">
@@ -346,7 +533,7 @@ export function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="section-premium py-28 md:py-36 bg-white border-t border-slate-200/80">
+    <section id="faq" className="section-premium py-16 md:py-20 bg-white border-t border-slate-200/80">
       <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-16">
         <Reveal className="lg:col-span-4">
           <span className="text-[11px] font-semibold text-tech-blue-light uppercase tracking-[0.2em]">
@@ -410,17 +597,16 @@ export function FAQ() {
 /* ---------- Final CTA ---------- */
 export function FinalCTA() {
   return (
-    <section className="section-premium relative py-36 md:py-44 overflow-hidden section-gradient-blue border-t border-slate-800">
-      <div className="pointer-events-none absolute inset-0 premium-ambient opacity-40" aria-hidden />
+    <section className="section-premium relative py-20 md:py-28 overflow-hidden bg-surface-muted border-t border-slate-200/80">
       <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
         <Reveal>
-          <span className="inline-flex items-center gap-2 text-[11px] font-semibold text-eco-green uppercase tracking-[0.22em]">
+          <span className="inline-flex items-center gap-2 text-[11px] font-semibold text-tech-blue-light uppercase tracking-[0.22em]">
             <Leaf className="size-3.5" strokeWidth={2.5} />
             07 — Próximo passo
           </span>
         </Reveal>
         <Reveal delay={0.1} y={40}>
-          <h2 className="text-display font-bold tracking-tight text-balance mt-8 mb-12 max-w-4xl mx-auto text-white">
+          <h2 className="text-display font-bold tracking-tight text-balance mt-8 mb-12 max-w-4xl mx-auto text-tech-blue">
             Comece a economizar hoje mesmo.
           </h2>
         </Reveal>
@@ -429,7 +615,7 @@ export function FinalCTA() {
             Entrar em contato
             <span className="size-2 bg-white/50 rounded-full animate-pulse-soft" />
           </PremiumButton>
-          <PremiumButton href="#projetos" variant="outline" size="lg">
+          <PremiumButton href="#projetos" variant="ghost" size="lg">
             Ver projetos realizados
           </PremiumButton>
         </Reveal>
@@ -441,13 +627,13 @@ export function FinalCTA() {
 /* ---------- Footer ---------- */
 export function Footer() {
   return (
-    <footer className="py-20 bg-tech-blue text-slate-300">
+    <footer className="py-14 bg-tech-blue text-slate-300">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid md:grid-cols-4 gap-14">
           <div>
             <Logo className="mb-5" light />
             <p className="text-sm max-w-[40ch] leading-relaxed text-slate-400">
-              Energia solar em Anápolis (GO) e Goiás, com foco em tecnologia, eficiência e sustentabilidade.
+              Energia solar em todo e Goiás, com foco em tecnologia, eficiência e sustentabilidade.
             </p>
           </div>
           <div>
@@ -482,13 +668,11 @@ export function Footer() {
                   Instagram: {INSTAGRAM_HANDLE}
                 </a>
               </li>
-              <li><a href="#" className="hover:text-eco-green transition-colors">LinkedIn</a></li>
             </ul>
           </div>
         </div>
-        <div className="mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between gap-2 text-[11px] text-slate-500">
+        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between gap-2 text-[11px] text-slate-500">
           <p>© 2026 {COMPANY_NAME}. Todos os direitos reservados.</p>
-          <p>CNPJ: 00.000.000/0001-00</p>
         </div>
       </div>
     </footer>

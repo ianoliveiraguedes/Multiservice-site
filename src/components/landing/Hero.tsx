@@ -11,9 +11,9 @@ import { WHATSAPP_URL } from "@/lib/landing/constants";
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const { ref: statsRef, inView } = useInViewOnce<HTMLDivElement>(0.2);
-  const projetos = useCountUp(500, 1600, inView);
+  const projetos = useCountUp(197, 1600, inView);
   const mw = useCountUp(2.4, 1800, inView);
-  const economia = useCountUp(95, 1800, inView);
+  const economia = useCountUp(92, 1800, inView);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -30,7 +30,7 @@ export function Hero() {
     <section
       id="top"
       ref={sectionRef}
-      className="relative min-h-[100svh] flex flex-col justify-end pt-28 pb-20 md:pb-28 overflow-hidden bg-white border-b border-slate-200/80"
+      className="relative min-h-[100svh] flex flex-col justify-end pt-24 pb-14 md:pb-20 overflow-hidden bg-white border-b border-slate-200/80"
     >
       <div className="pointer-events-none absolute inset-0 premium-ambient" aria-hidden />
       <div
@@ -78,18 +78,9 @@ export function Hero() {
               >
                 Solicitar orçamento
               </PremiumButton>
-              <PremiumButton
-                href={WHATSAPP_URL}
-                variant="ghost"
-                size="lg"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Falar no WhatsApp
-              </PremiumButton>
             </Reveal>
 
-            <Reveal delay={0.36} y={20} className="mt-16 md:mt-20 flex flex-wrap gap-14 md:gap-20">
+            <Reveal delay={0.36} y={20} className="mt-10 md:mt-14 flex flex-wrap gap-10 md:gap-16">
               <StatBlock value={`+${Math.round(projetos)}`} label="Projetos ativos" />
               <StatBlock value={`+${mw.toFixed(1)}MW`} label="Potência instalada" />
               <StatBlock value={`${Math.round(economia)}%`} label="Média de economia" />
